@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Kup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <canvas id="ctx" width="250" height="300" style="border:1px solid #000000;"></canvas>
+    <script src="/socket.io/socket.io.js"></script> 
+    <script>
+    let ctx = document.getElementById("ctx").getContext("2d");
+    ctx.font = '15px Arial';
+   
+    let socket = io();
+    let colorArray = ["red", "blue", "green", "purple", "orange"]; 
+    let imageArray = ["assets/red.png", "assets/blue.png", "assets/green.png", "assets/purple.png", "assets/orange.png"]   
+
+    let image = new Image(); 
+    socket.on('updateGame', data => { 
+        // let image = new Image(); 
+        ctx.clearRect(0, 0, 250, 300);
+        for(let i = 0 ; i < data.length; i++) { 
+            // ctx.arc(data[i].ball.x, data[i].ball.y, 50, 0, 2*Math.PI);
+            // ctx.fillText(data[i].player.number + "'s S: " + data[i].player.score, data[i].ball.x, data[i].ball.y - 2); 
+            if (i <= imageArray.length) image.src = imageArray[i]; 
+            if (i <= colorArray.length) ctx.fillStyle = colorArray[i]; 
+            ctx.fillText(data[i].player.number + "'s S: " + data[i].player.score, data[i].player.x, data[i].player.y - 2); 
+            // ctx.fillRect(data[i].player.x, data[i].player.y, 10, 70);
+            ctx.fillRect(data[i].player.x - 10, data[i].player.y + 70, 30, 5);
+            if (data[i].player.x >= data[i].ball.x - 25 && data[i].player.x <= data[i].ball.x + 25) { 
+                image.src = "assets/kick.png"; 
+                ctx.drawImage(image, data[i].player.x, data[i].player.y, 10, 70); 
+            } 
+            ctx.drawImage(image, data[i].player.x, data[i].player.y, 20, 70); // 10, 70 
+            ctx.fillRect(data[i].ball.x, data[i].ball.y, 10, 10); 
+            // ctx.arc(data[i].ball.x, data[i].ball.y, 50, 0, 2*Math.PI);
+            // ctx.fillText(data[i].player.number, data[i].player.x, data[i].player.y);      
+        } 
+    });
+
+    if( navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    ) { 
+        window.addEventListener("deviceorientation", e => { 
+            // y: event.beta 
+            // x: event.gamma 
+            // z: event.alpha (back & forth) 
+            // socket.emit("mobile", e.gamma); 
+            socket.emit("mobile", e.alpha); 
+        }); 
+    } else { 
+        document.onkeydown = event => {
+            if (event.keyCode === 68)    //d
+                socket.emit('keyPress',{inputId:'right',state:true});
+            else if (event.keyCode === 65) //a
+                socket.emit('keyPress',{inputId:'left',state:true}); 
+        } 
+        document.onkeyup = event => {
+            if (event.keyCode === 68)     //d
+                socket.emit('keyPress', {inputId:'right',state:false});
+            else if (event.keyCode === 65) //a
+                socket.emit('keyPress', {inputId:'left',state:false});
+        } 
+    } 
+   </script> 
+</body>
+</html>
