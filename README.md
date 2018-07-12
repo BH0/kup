@@ -12,7 +12,7 @@
 * Mobile (smartphone with accelerometer) - tilt the device 
 
 # Play 
-Visit: https://kup-tynpqtafuj.now.sh 
+Visit: https://kup-fuzmdjxpdk.now.sh 
 
 ### Known Bugs 
 * There (sometimes depending on coordinates) is a slight issue when the ball collides with the player 

@@ -79,12 +79,21 @@ let Player = id => {
         // console.log("X "+x); 
         // self.updatePosition(x); 
     } */ 
-    self.updatePosition = () => { 
-        if (self.pressingRight) { 
+    self.updatePosition = (x) => { 
+        if (x) { 
+            if (x >= 15) { 
+                self.x += self.speed; 
+            } 
+            if (x <= -15) { 
+                self.x += self.speed; 
+            }
+        } else { 
+            if (self.pressingRight) { 
             self.x += self.speed;
-        } 
-        if (self.pressingLeft) { 
-            self.x -= self.speed; 
+            } 
+            if (self.pressingLeft) { 
+                self.x -= self.speed; 
+            } 
         } 
     }
     return self;
@@ -115,11 +124,12 @@ io.sockets.on('connection', function(socket){
         // console.log("Mobile"); 
         // console.log(JSON.stringify(data)); 
         // x = data; 
-        // player.updatePosition(); 
-        if (data.inputId === 'left')
+        player.updatePosition(x); 
+        /* if (data.inputId === 'left')
             player.pressingLeft = data.state;
         else if (data.inputId === 'right')
             player.pressingRight = data.state;
+        */ 
     });   
 
 });
