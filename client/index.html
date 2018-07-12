@@ -52,14 +52,19 @@
             // x: event.gamma 
             // z: event.alpha (back & forth) 
             // socket.emit("mobile", e.gamma); 
-            socket.emit("mobile", e.beta); // e.alpha  
+    
+            if (e.gamma >= 20) { // right 
+                socket.emit('keyPress', { inputId: 'right', state: true });
+            } else if (e.gamma <= -20) { // left 
+                socket.emit('keyPress', { inputId: 'left', state: true }); 
+            } 
         }); 
     } else { 
         document.onkeydown = event => {
             if (event.keyCode === 68)    //d
-                socket.emit('keyPress',{inputId:'right',state:true});
+                socket.emit('keyPress', {inputId: 'right', state: true});
             else if (event.keyCode === 65) //a
-                socket.emit('keyPress',{inputId:'left',state:true}); 
+                socket.emit('keyPress', {inputId: 'left', state: true}); 
         } 
         document.onkeyup = event => {
             if (event.keyCode === 68)     //d

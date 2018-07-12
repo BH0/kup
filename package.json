@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app", 
-    "now-start": "node app", 
+    "start": "node app",
+    "now-start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
