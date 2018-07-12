@@ -82,6 +82,7 @@ let Player = id => {
     self.updatePosition = (x) => { 
         if (x) { 
             self.x = x; 
+            console.log(x);  
         } else { 
             if (self.pressingRight) { 
                 self.x += self.speed;
