@@ -54,9 +54,9 @@
             // socket.emit("mobile", e.gamma); 
     
             if (e.gamma >= 20) { // right 
-                socket.emit('keyPress', { inputId: 'right', state: true });
+                socket.emit('mobile', { inputId: 'right', state: true });
             } else if (e.gamma <= -20) { // left 
-                socket.emit('keyPress', { inputId: 'left', state: true }); 
+                socket.emit('mobile', { inputId: 'left', state: true }); 
             } 
         }); 
     } else { 

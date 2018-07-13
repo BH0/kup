@@ -83,9 +83,11 @@ let Player = id => {
         if (x) { 
             if (x >= 15) { 
                 self.x += self.speed; 
+                console.log(x); 
             } 
             if (x <= -15) { 
                 self.x += self.speed; 
+                console.log(x); 
             }
         } else { 
             if (self.pressingRight) { 
@@ -125,6 +127,7 @@ io.sockets.on('connection', function(socket){
         // console.log(JSON.stringify(data)); 
         // x = data; 
         player.updatePosition(x); 
+        console.log("Mobile input"); 
         /* if (data.inputId === 'left')
             player.pressingLeft = data.state;
         else if (data.inputId === 'right')
